@@ -1,8 +1,8 @@
 import {z} from "zod";
 
-const userSchemaZod = z.object({
-    eventoId: z.string(),
-    usuarioId: z.string(),
+const ticketSchemaZod = z.object({
+    eventId: z.string(),
+    userId: z.string(),
     ticketType: z.string(),
     buyDate: z.string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "The date must be in format YYYY-MM-DD"),
@@ -10,4 +10,4 @@ const userSchemaZod = z.object({
     qrCode: z.string(),
 })
 
-export {userSchemaZod}
+export {ticketSchemaZod}
