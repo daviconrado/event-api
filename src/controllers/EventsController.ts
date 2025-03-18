@@ -27,7 +27,7 @@ export class EventsController{
         const events = await Event.findById(id);
 
         if(JSON.stringify(events)==="null"){
-            next(new AppError("",404));
+            next(new AppError("Event not found",404));
             return;
         }
 

@@ -9,7 +9,7 @@ const eventSchema = new Schema({
         types: String,
         price: Number,
         totalQuantity: Number,
-        selledQuantity: Number
+        soldQuantity: Number
     }
 })
 

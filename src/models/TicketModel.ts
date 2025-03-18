@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
 
 const ticketSchema = new Schema({
-    eventoId: { 
+    eventId: { 
         type: Schema.Types.ObjectId, 
         ref: "Events", 
         required: true 
     },
-    usuarioId: { 
+    userId: { 
         type: Schema.Types.ObjectId, 
         ref: "Users", 
         required: true 
