@@ -2,6 +2,7 @@ import { NextFunction, Request, Response  } from "express"
 import { userSchemaZod, loginSchemaZod } from "../models/zod-schemas/user-schema-zod"
 import Users from "../models/UserModel"
 import { AppError } from "../utils/AppError"
+import { comparePasswords } from "../utils/hashUtils"
 
 export class UsersController{
     async register(req: Request, res: Response, next: NextFunction){
@@ -19,17 +20,22 @@ export class UsersController{
         try {
             const validatedZodData = loginSchemaZod.parse(req.body)
             const {email,password}= validatedZodData;
-            const data = await Users.find({email:email, password:password}).exec();
-    
-            if(JSON.stringify(data)==="null"){
+
+            const data = await Users.find({email:email}).exec();
+
+            if(!data || data.length===0){
                 next(new AppError("",404));
                 return;
             }
 
-            if(data.length===0){
-                next(new AppError("Incorrect email or password",401));
+            const passwordHash = data[0].password as string;
+            const loginFlag = await comparePasswords(password,passwordHash)
+
+            if(!loginFlag){
+                next(new AppError("Email or password is incorrect",404));
                 return;
             }
+
             res.status(200).json(data)
         } catch (error) {
             next(error)
