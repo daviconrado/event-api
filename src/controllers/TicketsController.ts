@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ticketSchemaZod } from "../models/zod-schemas/ticket-schema-zod";
 import Tickets from "../models/TicketModel";
 import { AppError } from "../utils/AppError";
-import { sellTicket } from "./ticketService";
+import { sellTicket } from "./ticket-service";
 
 export class TicketsController{
     async create(req: Request, res: Response, next: NextFunction){

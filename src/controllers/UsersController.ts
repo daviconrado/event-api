@@ -3,6 +3,8 @@ import { userSchemaZod, loginSchemaZod } from "../models/zod-schemas/user-schema
 import Users from "../models/UserModel"
 import { AppError } from "../utils/AppError"
 import { comparePasswords } from "../utils/hashUtils"
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 export class UsersController{
     async register(req: Request, res: Response, next: NextFunction){
@@ -30,6 +32,12 @@ export class UsersController{
 
             const passwordHash = data[0].password as string;
             const loginFlag = await comparePasswords(password,passwordHash)
+
+            if(loginFlag||data[0].role==="admin"){  //create token if the user is an admin
+                const {_id} = data[0]
+                const token = jwt.sign({_id},process.env.JWT_SECRET,{expiresIn:'1h'})
+                res.status(200).json({data,token})
+            }
 
             if(!loginFlag){
                 next(new AppError("Email or password is incorrect",404));

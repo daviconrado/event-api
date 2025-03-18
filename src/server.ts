@@ -1,9 +1,10 @@
 import express from "express"
 import {routes} from "./routes"
-import { errorHandler } from "./middlewares/errorHandler";
+import { errorHandler } from "./middlewares/error-handler";
 import mongoose from "mongoose";
 import Event from "./models/EventModel"
 require('dotenv').config();
+
 
 const DB_CONNECTION_URL = process.env.DB_CONNECTION_URL;
 if (!DB_CONNECTION_URL) {
