@@ -16,4 +16,4 @@ const eventSchemaZod = z.object({
     ticketTypes: ticketTypeSchema
 })
 
-export {eventSchemaZod}
+export {eventSchemaZod, ticketTypeSchema}

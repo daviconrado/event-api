@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response  } from "express"
-import { userSchemaZod, loginSchemaZod } from "../models/zod-schemas/user-schema-zod"
+import { userSchemaZod, loginSchemaZod } from "../validations/zod-schemas/user-schema-zod"
 import Users from "../models/UserModel"
 import { AppError } from "../utils/AppError"
-import { comparePasswords } from "../utils/hashUtils"
+import { comparePasswords } from "../utils/hash-utils"
+import { userUpdateSchema } from "../validations/zod-schemas/update-schema-zod"
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
@@ -53,7 +54,8 @@ export class UsersController{
     async update(req: Request, res: Response, next: NextFunction){
         try {
             const {id} = req.params
-            await Users.updateOne({_id:id},req.body)
+            const validatedZodData = userUpdateSchema.parse(req.body)
+            await Users.updateOne({_id:id},validatedZodData)
     
             const event = await Users.findById(id);
             res.status(200).json(event)

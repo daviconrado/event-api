@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { ticketSchemaZod } from "../models/zod-schemas/ticket-schema-zod";
+import { ticketSchemaZod } from "../validations/zod-schemas/ticket-schema-zod";
 import Tickets from "../models/TicketModel";
 import { AppError } from "../utils/AppError";
-import { sellTicket } from "./ticket-service";
+import { sellTicket } from "../services/ticket-service";
+import { ticketUpdateSchema } from "../validations/zod-schemas/update-schema-zod";
 
 export class TicketsController{
     async create(req: Request, res: Response, next: NextFunction){
@@ -52,7 +53,8 @@ export class TicketsController{
     async update(req: Request, res: Response, next: NextFunction){ //validate
         try {
             const {id} = req.params
-            await Tickets.updateOne({_id:id},req.body)
+            const validatedZodData = ticketUpdateSchema.parse(req.body)
+            await Tickets.updateOne({_id:id},validatedZodData)
     
             const event = await Tickets.findById(id);
             res.status(200).json(event)

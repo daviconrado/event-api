@@ -1,7 +1,8 @@
 import {NextFunction, Request, Response} from "express"
 import Event from "../models/EventModel"
 import { AppError } from "../utils/AppError"
-import { eventSchemaZod } from "../models/zod-schemas/event-schema-zod";
+import { eventSchemaZod } from "../validations/zod-schemas/event-schema-zod";
+import { eventUpdateSchema } from "../validations/zod-schemas/update-schema-zod";
 
 export class EventsController{
      /*
@@ -51,7 +52,8 @@ export class EventsController{
    async update(req: Request, res: Response,next: NextFunction){
     try {
         const {id} = req.params
-        await Event.updateOne({_id:id},req.body)
+        const validatedZodData = eventUpdateSchema.parse(req.body)
+        await Event.updateOne({_id:id},validatedZodData)
 
         const event = await Event.findById(id);
         res.status(200).json(event)
