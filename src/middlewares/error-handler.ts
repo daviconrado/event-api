@@ -10,6 +10,10 @@ export const errorHandler: ErrorRequestHandler = (
     res: Response<any, Record<string, any>>,
     next: NextFunction
   ) => {
+    if (res.headersSent) {
+      return next(error);
+    }
+
     if (error instanceof AppError) {
       res.status(error.statusCode).json({ message: error.message });
       return;

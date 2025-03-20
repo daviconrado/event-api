@@ -34,7 +34,7 @@ export class UsersController{
             const passwordHash = data[0].password as string;
             const loginFlag = await comparePasswords(password,passwordHash)
 
-            if(loginFlag||data[0].role==="admin"){  //create token if the user is an admin
+            if(loginFlag||data[0].role==="admin"){ 
                 const {_id} = data[0]
                 const token = jwt.sign({_id},process.env.JWT_SECRET,{expiresIn:'1h'})
                 res.status(200).json({data,token})

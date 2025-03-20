@@ -5,13 +5,6 @@ import { eventSchemaZod } from "../validations/zod-schemas/event-schema-zod";
 import { eventUpdateSchema } from "../validations/zod-schemas/update-schema-zod";
 
 export class EventsController{
-     /*
-    *index -- GET -- para listar varios registros
-    *show -- GET -- para listar um registro
-    *create -- POST -- criar um registro
-    *update -- PUT -- para atualizar um registro
-    *remove -- DELETE -- para deletar um registro
-    */
     async index(req: Request, res: Response, next: NextFunction) {
         try {
             const events = await Event.find({});

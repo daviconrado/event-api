@@ -4,12 +4,17 @@ import Tickets from "../models/TicketModel";
 import { AppError } from "../utils/AppError";
 import { sellTicket } from "../services/ticket-service";
 import { ticketUpdateSchema } from "../validations/zod-schemas/update-schema-zod";
+import { generateTicketQrCode } from "../services/ticket-qr-service";
 
 export class TicketsController{
     async create(req: Request, res: Response, next: NextFunction){
         try {
             const validatedZodData = ticketSchemaZod.parse(req.body)
             const ticket = new Tickets(validatedZodData)
+
+            const qrcode = await generateTicketQrCode(ticket._id.toString())
+            ticket.qrCode = qrcode;
+            
             await ticket.save()
             await sellTicket(ticket.eventId.toString())
             res.status(201).json(ticket)
@@ -50,7 +55,7 @@ export class TicketsController{
         }
     }
 
-    async update(req: Request, res: Response, next: NextFunction){ //validate
+    async update(req: Request, res: Response, next: NextFunction){ 
         try {
             const {id} = req.params
             const validatedZodData = ticketUpdateSchema.parse(req.body)

@@ -11,7 +11,7 @@ const userSchema = new Schema({
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
     if (!this.password) {
-        return next(new Error("A senha não pode ser vazia"));
+        return next(new Error("The password cannot be empty"));
     }
     this.password = await hashPassword(this.password);
     next();
