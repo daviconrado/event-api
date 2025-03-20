@@ -40,10 +40,6 @@ A API permite o cadastro, atualização e remoção de eventos, bem como a emiss
 - **Segurança:**  
   Uso de tokens JWT para proteger as rotas da API.
 
-### Notificações em Tempo Real
-- **WebSockets:**  
-  Comunicação em tempo real para informar os usuários sobre atualizações, mudanças de última hora ou a validação de ingressos na entrada.
-
 ## 📌 Estrutura Técnica e Arquitetura
 
 ### Back-end
