@@ -7,7 +7,7 @@ const userSchemaZod = z.object({
     name: z.string()
         .min(3, "The name must have at least 3 characters")
         .openapi({
-            example: "John Doe",
+            example: "Davi Conrado",
             type: "string" 
         }),
     email: z.string()
@@ -30,7 +30,7 @@ const userSchemaZod = z.object({
         })
 }).openapi({
     title: "User",
-    type: "object"  // Explicit object type declaration
+    type: "object" 
 });
 
 const loginSchemaZod = z.object({

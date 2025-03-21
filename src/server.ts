@@ -4,11 +4,12 @@ import { errorHandler } from "./middlewares/error-handler";
 import mongoose from "mongoose";
 import rateLimit from "express-rate-limit";
 import path from 'path';
+require('dotenv').config();
 
 import { generateSchema } from '@anatine/zod-openapi';
 import { loginSchemaZod, userSchemaZod } from "./validations/zod-schemas/user-schema-zod";
-
-require('dotenv').config();
+import { eventSchemaZod } from "./validations/zod-schemas/event-schema-zod";
+import { ticketSchemaZod } from "./validations/zod-schemas/ticket-schema-zod";
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -26,7 +27,7 @@ const swaggerOptions = {
     info: {
       title: 'Event API',
       version: '1.0.0',
-      description: 'Documentação da API',
+      description: 'API Documentation',
     },
     servers: [
       { url: 'http://localhost:3333', description: 'Servidor local' },
@@ -41,7 +42,9 @@ const swaggerOptions = {
       },
       schemas: {
         User: generateSchema(userSchemaZod),
-        Login: generateSchema(loginSchemaZod)
+        Login: generateSchema(loginSchemaZod),
+        Ticket: generateSchema(ticketSchemaZod),
+        Event: generateSchema(eventSchemaZod)
       }
     },
   },
@@ -52,7 +55,7 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 const DB_CONNECTION_URL = process.env.DB_CONNECTION_URL;
 if (!DB_CONNECTION_URL) {
-  throw new Error("A variável de ambiente DB_CONNECTION_URL não está definida.");
+  throw new Error("The variable DB_CONNECTION_URL is undefined");
 }
 
 const PORT = 3333;

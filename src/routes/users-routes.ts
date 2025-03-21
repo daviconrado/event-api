@@ -35,7 +35,7 @@ const usersController = new UsersController();
  *         content:
  *           application/json:
  *             example:
- *               error: "Invalid email format"
+ *               message: "Bad request syntax"
  */
 usersRoutes.post("/register", usersController.register);
 
@@ -60,6 +60,10 @@ usersRoutes.post("/register", usersController.register);
  *               token: "jwt.token.here"
  *       401:
  *         description: Invalid credentials
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "Email or password is incorrect"
  */
 usersRoutes.post("/login", usersController.login);
 

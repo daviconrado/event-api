@@ -37,15 +37,13 @@ export class UsersController{
             if(loginFlag||data[0].role==="admin"){ 
                 const {_id} = data[0]
                 const token = jwt.sign({_id},process.env.JWT_SECRET,{expiresIn:'1h'})
-                res.status(200).json({data,token})
+                res.status(200).json({token: token})
             }
 
             if(!loginFlag){
-                next(new AppError("Email or password is incorrect",404));
+                next(new AppError("Email or password is incorrect",401));
                 return;
             }
-
-            res.status(200).json(data)
         } catch (error) {
             next(error)
         }
@@ -70,7 +68,7 @@ export class UsersController{
             const events = await Users.findById(id);
     
             if(JSON.stringify(events)==="null"){
-                next(new AppError("",404));
+                next(new AppError("User not found",404));
                 return;
             }
     
