@@ -21,7 +21,7 @@ A API permite o cadastro, atualização e remoção de eventos, bem como a emiss
 ## ⚙️ Funcionalidades
 ### Cadastro e Gerenciamento de Eventos
 - **Criação, atualização e remoção de eventos:**  
-  Permite cadastrar eventos com informações básicas, como nome, data, local, descrição, imagens e categoria.
+  Permite cadastrar eventos com informações básicas, como nome, data, local, descrição.
 - **Definição de Ingressos:**  
   Configuração de diferentes tipos de ingressos (ex.: pista, VIP) com preços e quantidades.
 
