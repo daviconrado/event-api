@@ -3,14 +3,13 @@
 </h4>
 
 <p align="center">
-	<img alt="Status Concluído" src="https://img.shields.io/badge/STATUS-CONCLU%C3%8DDO-brightgreen">
+	<img alt="Status Em Andamento" src="https://img.shields.io/badge/STATUS-EM ANDAMENTO-yellow">
 </p>
 
 <p align="center">
  <a href="#-sobre-o-projeto">Sobre</a> •
  <a href="#-funcionalidades">Funcionalidades</a> •
- <a href="#-layout">Layout</a> • 
- <a href="#-tecnologias">Tecnologias</a> • 
+ <a href="#-estrutura-tecnica-e-arquiteturas">Tecnologias</a> • 
  <a href="#-licença">Licença</a>
 </p>
 
@@ -22,7 +21,7 @@ A API permite o cadastro, atualização e remoção de eventos, bem como a emiss
 ## ⚙️ Funcionalidades
 ### Cadastro e Gerenciamento de Eventos
 - **Criação, atualização e remoção de eventos:**  
-  Permite cadastrar eventos com informações básicas, como nome, data, local, descrição, imagens e categoria.
+  Permite cadastrar eventos com informações básicas, como nome, data, local, descrição.
 - **Definição de Ingressos:**  
   Configuração de diferentes tipos de ingressos (ex.: pista, VIP) com preços e quantidades.
 
