@@ -15,7 +15,8 @@ const swaggerOptions = {
         description: 'API Documentation',
       },
       servers: [
-        { url: 'http://localhost:3333', description: 'Servidor local' },
+        { url: 'https://event-api-wh4f.onrender.com', description: 'Deploy server' },
+        { url: 'http://localhost:3333', description: 'Local server' },
       ],
       components: {
         securitySchemes: {
