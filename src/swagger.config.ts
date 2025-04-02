@@ -33,7 +33,10 @@ const swaggerOptions = {
         }
       },
     },
-    apis: [path.join(__dirname, 'routes/*.ts')], 
+    apis: [
+      path.join(__dirname, '../dist/routes/*.js'), // Caminho de produção
+      path.join(__dirname, '../src/routes/*.ts') // Para desenvolvimento
+    ],
   };
   
   const swaggerSpec = swaggerJsdoc(swaggerOptions);
