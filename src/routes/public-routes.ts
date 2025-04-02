@@ -16,7 +16,7 @@ const eventsController = new EventsController();
 
 /**
  * @openapi
- * /events:
+ * /public/events:
  *   get:
  *     tags: [Public]
  *     summary: List all events
