@@ -24,26 +24,24 @@ export class UsersController{
             const validatedZodData = loginSchemaZod.parse(req.body)
             const {email,password}= validatedZodData;
 
-            const data = await Users.find({email:email}).exec();
+            const user = await Users.findOne({email:email}).exec();
 
-            if(!data || data.length===0){
-                next(new AppError("",404));
+            if(!user){
+                next(new AppError("User not found",404));
                 return;
             }
 
-            const passwordHash = data[0].password as string;
-            const loginFlag = await comparePasswords(password,passwordHash)
+            const isPasswordValid = await comparePasswords(password,user.password as string)
 
-            if(loginFlag||data[0].role==="admin"){ 
-                const {_id} = data[0]
-                const token = jwt.sign({_id},process.env.JWT_SECRET,{expiresIn:'1h'})
-                res.status(200).json({token: token})
-            }
-
-            if(!loginFlag){
+            if(!isPasswordValid){
                 next(new AppError("Email or password is incorrect",401));
                 return;
             }
+
+            const {_id,role} = user
+            const token = jwt.sign({_id, role},process.env.JWT_SECRET,{expiresIn:'1h'})
+            res.status(200).json({token})
+
         } catch (error) {
             next(error)
         }
@@ -75,6 +73,27 @@ export class UsersController{
             res.status(200).json(events);
         } catch (error : any) {
             next(new AppError("",404));
+        }
+    }
+
+    async remove(req: Request, res: Response,next: NextFunction){
+        try {
+            const {id} = req.params
+            const events = await Users.deleteOne({_id:id});
+            res.status(204).json(events);
+        } catch (error : any) {
+            next(new AppError(error.message));
+        }
+       }
+
+    async admin(req: Request, res: Response, next: NextFunction){
+        try {
+            const {id} = req.params;
+            await Users.updateOne({_id:id},{role:"admin"})
+            res.status(204);
+        } 
+        catch (error : any) {
+            next(new AppError(error.message));
         }
     }
 }

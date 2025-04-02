@@ -6,6 +6,7 @@ import rateLimit from "express-rate-limit";
 require('dotenv').config();
 
 import { swaggerSpec } from "./swagger.config";
+import { authMiddleware } from "./middlewares/auth-middleware";
 const swaggerUi = require('swagger-ui-express');
 
 const limiter = rateLimit({
@@ -31,12 +32,13 @@ app.use(express.json())
 
 app.use(limiter)
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use(routes)
 
 app.use(errorHandler)
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(PORT,()=>{
-    console.log(`Server is running at: http://localhost${PORT}`)
+    console.log(`Server is running at: http://localhost:${PORT}`)
 })

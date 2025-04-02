@@ -7,7 +7,7 @@
   },
   "author": "Davi Conrado",
   "license": "ISC",
-  "description": "Uma API de gerenciamento de eventos",
+  "description": "An event management api",
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.10",

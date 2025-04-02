@@ -1,6 +1,7 @@
 import {Router} from "express";
 import { TicketsController } from "../controllers/TicketsController";
 import { authMiddleware } from "../middlewares/auth-middleware";
+import { checkRoles } from "../middlewares/check-role";
 
 const ticketsRoutes = Router();
 const ticketsController = new TicketsController();
@@ -17,6 +18,8 @@ const ticketsController = new TicketsController();
  *   post:
  *     tags: [Tickets]
  *     summary: Buy a ticket
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -37,13 +40,15 @@ const ticketsController = new TicketsController();
  *             example:
  *               message: "Bad request syntax"
  */
-ticketsRoutes.post("",ticketsController.create) 
+ticketsRoutes.post("",checkRoles(["user"]),ticketsController.create) 
 /**
  * @openapi
  * /tickets/{userid}:
  *   get:
  *     tags: [Tickets]
  *     summary: Get user tickets information
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Ticket found
@@ -58,13 +63,15 @@ ticketsRoutes.post("",ticketsController.create)
  *             example:
  *               message: "Bad request syntax"
  */
-ticketsRoutes.get("/user/:userId",ticketsController.index) 
+ticketsRoutes.get("/user/:userId",checkRoles(["user"]),ticketsController.index) 
 /**
  * @openapi
  * /tickets/{ticketid}:
  *   get:
  *     tags: [Tickets]
  *     summary: Get ticket information
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Ticket found
@@ -79,7 +86,7 @@ ticketsRoutes.get("/user/:userId",ticketsController.index)
  *             example:
  *               message: "Bad request syntax"
  */
-ticketsRoutes.get("/:id",ticketsController.show) 
+ticketsRoutes.get("/:id",checkRoles(["user"]),ticketsController.show) 
 /**
  * @openapi
  * /tickets/{ticketid}:
@@ -108,19 +115,21 @@ ticketsRoutes.get("/:id",ticketsController.show)
  *             example:
  *               message: "Bad request syntax"
  */
-ticketsRoutes.patch("/:id",authMiddleware,ticketsController.update)
+ticketsRoutes.patch("/:id", checkRoles(["admin"]),ticketsController.update)
 /**
  * @openapi
  * /tickets/{ticketid}:
  *   delete:
  *     tags: [Tickets]
  *     summary: Delete a ticket
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       204:
  *         description: Ticket deleted successfully
  *       404:
  *         description: Ticket not found
  */
-ticketsRoutes.delete("/:id",ticketsController.remove)
+ticketsRoutes.delete("/:id",checkRoles(["user"]),ticketsController.remove)
 
 export{ticketsRoutes}
