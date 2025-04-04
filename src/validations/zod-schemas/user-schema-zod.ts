@@ -22,12 +22,6 @@ const userSchemaZod = z.object({
             type: "string",
             format: "password"
         }),
-    role: z.enum(["admin", "user"])
-        .default("user")
-        .openapi({
-            example: "user",
-            enum: ["admin", "user"]
-        })
 }).openapi({
     title: "User",
     type: "object" 

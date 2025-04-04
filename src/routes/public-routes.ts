@@ -20,6 +20,7 @@ const eventsController = new EventsController();
  *   get:
  *     tags: [Public]
  *     summary: List all events
+ *     security: []
  *     responses:
  *       200:
  *         description: Listing all events
@@ -37,6 +38,7 @@ publicRoutes.get("/events",eventsController.index)
  *   get:
  *     tags: [Public]
  *     summary: Show a event
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -61,10 +63,11 @@ publicRoutes.get("/events/:id",eventsController.show)
 
 /**
  * @openapi
- * /public/users/register:
+ * /public/register:
  *   post:
  *     tags: [Public]
  *     summary: Register a new user
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -89,10 +92,11 @@ publicRoutes.post("/register", usersController.register);
 
 /**
  * @openapi
- * /public/users/login:
+ * /public/login:
  *   post:
  *     tags: [Public]
  *     summary: Authenticate user
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
